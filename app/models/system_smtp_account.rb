@@ -1,0 +1,27 @@
+# == Schema Information
+#
+# Table name: smtp_accounts
+#
+#  id                                                                         :bigint           not null, primary key
+#  description                                                                :string(255)
+#  from                                                                       :string(255)
+#  password(Extra large for encrypted content)                                :string(500)
+#  port                                                                       :integer
+#  server                                                                     :string(255)
+#  type(STI (Single Table Inheritance for SmtpAccount and SystemSmtpAccount)) :string(255)
+#  username(Extra large for encrypted content)                                :string(500)
+#  created_at                                                                 :datetime         not null
+#  updated_at                                                                 :datetime         not null
+#  user_id(Owner of this entry)                                               :bigint           not null
+#
+# Indexes
+#
+#  index_smtp_accounts_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
+class SystemSmtpAccount < SmtpAccount
+  belongs_to :user
+end

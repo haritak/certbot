@@ -1,0 +1,18 @@
+<%= form_with( model: @fixed_attachment ) do |form| %>
+  <% if @fixed_attachment.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@fixed_attachment.errors.count, "error") %> prohibited the fixed attachment file from being saved:</h2>
+      <ul>
+        <% @fixed_attachment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.label :email_filename %>: <%= form.text_field :email_filename %>
+  <%= form.file_field :fixed, required: true %>
+
+  <%= form.submit 'ανέβασμα επιλεγμένου αρχείου'%>
+  <p/>
+<% end %>

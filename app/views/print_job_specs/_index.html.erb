@@ -1,0 +1,33 @@
+
+<div class="print_job_spec_create">
+  <%= link_to "Νέα εργασία", new_print_job_spec_path %>
+</div>
+
+<% if @print_job_specs.count == 0 %>
+  <p> Δεν έχετε καμία εργασία δημιουργίας αρχείων. </p>
+
+  <p> Ξεκινήστε δημιουργώντας μία <%= link_to "νέα εργασία", new_print_job_spec_path %>. </p>
+<% else %>
+  <center><h1>εργασίες</h1></center>
+  <div id="print_job_specs">
+    <table border=1>
+      <tr>
+        <th>Εργασία</th>
+        <th>Προδιαγραφές<br/>Εργασίας</th>
+        <th>Δημιουργημένα<br/>Αρχεία</th>
+        <th>Απεσταλμένα<br/>Email</th>
+        <th>Φόρμα<br/>αυτόνομου κατεβάσματος</th>
+        <th>
+          <span title="Σημείωση: Προς το παρών το backup δεν περιέχει τα αρχεία που έχουν δημιουργηθεί μέσω φόρμας αυτόνομου κατεβάσματος">
+            Backup αρχείων (*)
+          </span>
+        </th>
+        <th colspan=2>ενέργειες</th>
+      </tr>
+      <% @print_job_specs.each do |print_job_spec| %>
+          <%= render print_job_spec %>
+      <% end %>
+    </table>
+  </div>
+
+<% end %>

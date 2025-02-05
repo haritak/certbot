@@ -1,0 +1,37 @@
+<div id="<%= dom_id user %>">
+
+    <h1>Ρυθμίσεις</h1>
+    <h2>Επιλεγμένος λογαριασμός εξερχόμενης αλληλογραφίας</h2>
+    <p>
+     Μετά την έκδοση 0.5 κάθε εργασία αποστολής email έχει τον δικό της λογαριασμό.
+    </p>
+    <p> Ο λογαριασμός που θα επιλεχθεί παρακάτω χρησιμοποιείται:
+    <ul>
+      <li>Για την επαναποστολή μεμονομένων δημιουργημένων αρχείων.</li>
+    </ul>
+    </p>
+    <% if not user.smtp_account %>
+      <p> Δεν έχετε επιλέξει λογαριασμό</p>
+    <% else %>
+      <h3><%= user.smtp_account.description %></h3>
+      <table>
+        <tr>
+          <td>
+            <strong>Εξυπηρετητής</strong>
+          </td> 
+          <td>
+            <%= user.smtp_account.server %>:<%= user.smtp_account.port %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Αποστολέας</strong>
+          </td>
+          <td>
+            <%= user.smtp_account.from %>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+</div>
+

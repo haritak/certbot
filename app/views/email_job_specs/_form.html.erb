@@ -1,0 +1,91 @@
+<%= form_with(model: email_job_spec) do |form| %>
+  <% if email_job_spec.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(email_job_spec.errors.count, "error") %> prohibited this email_job_spec from being saved:</h2>
+
+      <ul>
+        <% email_job_spec.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if print_job_spec %>
+    <p>
+    Το CSV για την <strong>εργασία <%=print_job_spec.id%> <%= print_job_spec.user.email %></strong>
+    περιέχει τις παρακάτω εγγραφές :
+    </p>
+    <%= render 'email_job_specs/csv_entries', print_job_spec: print_job_spec, email_job_spec: email_job_spec, show_all: true %>
+    <%= form.hidden_field :print_job_spec_id, value: print_job_spec.id %>
+  <% else %>
+    <% if current_user.is_admin? %>
+      <%= collection_select(:email_job_spec, :print_job_spec_id, PrintJobSpec.where( status: PrintJobSpec::STATUS[ :finished ]), :id, :description, prompt: true ) %>
+    <% else %>
+      <%= collection_select(:email_job_spec, :print_job_spec_id, PrintJobSpec.where( status: PrintJobSpec::STATUS[ :finished ], user_id: current_user.id), :id, :description, prompt: true ) %>
+    <% end %>
+  <% end %>
+
+  <p>
+  Παρακαλώ επιλέξτε τα Α/Α προς τα οποία θα γίνει αποστολή email καθώς και ποιό αρχείο να αποσταλεί ως συνημμένο μαζί με το email.
+  </p>
+  <table>
+    <tr>
+      <td>
+        Επιλογή Α/Α :
+      </td>
+      <td>
+        <%= form.text_field :csv_entries %> (Πχ: <b>all</b> ή <b>1,2,3</b> ή <b>1,7-10,20</b>. To <b>κενό</b> αντιστοιχεί σε όλες.) 
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <%= form.label 'Συνημμένο για αποστολή', style: "display: block" %>
+      </td>
+      <td>
+        <%= form.collection_radio_buttons :attachment_pattern, ["pdf", "odt"], :to_s, :to_s %>
+        (εξ'ορισμού το pdf)
+      </td>
+    </tr>
+  </table>
+
+  <p/>
+
+  <h2>Εξερχόμενο email</h2>
+  <p> <b> Μελλοντικά </b> Τόσο στο θέμα, όσο και στο σώμα του email, <u>θα</u> μπορούν να χρησιμοποιηθούν [PLACEHOLDERS]
+  (όπως στα templates). Προς το παρόν, η δυνατότητα αυτή δεν έχει ακόμα υλοποιηθεί.</p>
+  <h3>Carbon copy (Cc)</h3>
+  <p>πολλαπλές διευθύνσεις μπορούν να μπουν με κόμμα</p>
+  <p><%= form.text_field :cc, size: 50 %></p>
+  <h3>Blind Carbon copy (Bcc)</h3>
+  <p>πολλαπλές διευθύνσεις μπορούν να μπουν με κόμμα</p>
+  <p><%= form.text_field :bcc, size: 50 %></p>
+  <h3>Θέμα</h3>
+  <p><%= form.text_field :subject, size: 50 %></p>
+  <h3>Σώμα (html formatted)</h3>
+  <p><%= form.rich_text_area :body, cols: 50, rows: 10 %></p>
+
+  <h3>Λογαριασμός εξερχόμενης αλληλογραφίας</h3>
+  <p>
+  <% form.label :smtp_account_id %> Λογαριασμός SMTP
+  <%= form.collection_select(:smtp_account_id,
+                             SystemSmtpAccount.all.or( SmtpAccount.where(user_id: print_job_spec.user_id) ), 
+                             :id, :long_description, prompt: true) %>
+  </p>
+
+  <h3>Σταθερό συνημμένο</h3>
+    <div>
+      <%= form.collection_select(:fixed_attachment_id, 
+                                 FixedAttachment.where(user: current_user), 
+                                 :id, :email_filename, 
+                                 include_blank: true,
+                                 prompt: true) %>
+    </div>
+
+    <%= form.submit 'Ενημέρωση' %>
+<% end %>
+
+<p>
+Μετά την δημιουργία της εργασίας απαιτείται η εκκίνησή της για την αποστολή των emails.
+</p>

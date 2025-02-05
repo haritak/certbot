@@ -1,0 +1,134 @@
+<tr class="print_job_spec" id="<%= dom_id print_job_spec %>">
+  <td class="print_job_spec_header" style="text-align:center; vertical-align: middle;">
+      <%= print_job_spec.id %><br/>
+      <% if current_user.is_admin? %>
+        <small><%= print_job_spec.user.email %></small><br/>
+      <% end %>
+      <%= print_job_spec.comment %>
+  </td>
+  <td>
+    <ul>
+      <li>
+        <%= print_job_spec.odt_file.odtfile.attached? ? 
+          (link_to print_job_spec.odt_file.filename,
+           rails_blob_path( print_job_spec.odt_file.odtfile ) ) : "N/A" %><br/>
+           <% if print_job_spec.odt_file.system? %>
+             (system)
+           <% end %>
+      </li>
+      <li>
+        <%= print_job_spec.csv_file.csvfile.attached? ?
+          (link_to print_job_spec.csv_file.filename,
+           rails_blob_path( print_job_spec.csv_file.csvfile ) ) : "N/A" %><br/>
+      </li>
+    </ul>
+  </td>
+  <td style="text-align:center; vertical-align: middle;">
+    <% if print_job_spec.generated_files.count > 0 %>
+      <%= print_job_spec.generated_files.count %> [<%= link_to "προβολή όλων", generated_files_print_job_spec_path( print_job_spec ) %>]
+    <% else %>
+      Δεν έχουν δημιουργηθεί
+    <% end %>
+    <% if !PrintJob.find_by(print_job_spec: print_job_spec) %>
+      <div class="print_job_spec_start">
+        <% if print_job_spec.generated_files.count > 0 %>
+          <% button_title = "επανέναρξη δημιουργίας αρχείων" %>
+          <% button_hover = "ήδη δημιουργημένα αρχεία δεν ξαναδημιουργούνται" %>
+        <% else %>
+          <% button_title = "έναρξη δημιουργίας αρχείων" %>
+          <% button_hover = "" %>
+        <% end %>
+        <span title="<%= button_hover %>">
+          <%= button_to button_title, print_jobs_url, params: {print_job_spec: {id: print_job_spec.id}} %>
+        </span>
+      </div>
+    <% else %>
+      <strong>
+        <span title="<%= print_job_spec.status %>">
+          ...σε εξέλιξη...  (παρακαλώ κάντε refresh)
+        </span>
+      </strong>
+    <% end %>
+  </td>
+  <td style="text-align:center; vertical-align: middle;">
+    <% if print_job_spec.generated_files.count > 0 %>
+      <% if print_job_spec.email_job_spec&.email_jobs %>
+        <%= print_job_spec.email_job_spec&.email_jobs.count %><br/>
+        [<%= link_to "προβολή όλων", generated_emails_email_job_spec_path( print_job_spec.email_job_spec ) %>]<br/>
+        <% if print_job_spec.email_job_spec&.email_jobs.failed.count > 0 %>
+          (<%= print_job_spec.email_job_spec&.email_jobs.failed.count %> με σφάλμα)<br/>
+        <% end %>
+      <% end %>
+
+      <% if print_job_spec.status == PrintJobSpec::STATUS[ :finished ] %>
+        <p>
+        <% if print_job_spec.email_job_spec %>
+          <div class="print_job_spec_create">
+            <%= link_to "διαχείριση", email_job_spec_path( print_job_spec.email_job_spec ) %><br/>
+          </div>
+        <% else %>
+          <div class="print_job_spec_create">
+            <%= link_to "δημιουργία", new_email_job_print_job_spec_path( print_job_spec ) %><br/>
+          </div>
+        <% end %>
+      <% else %>
+        ...δημιουργία αρχείων σε εξέλιξη...<br/>
+      <% end %>
+        </p>
+    <% end %>
+  </td>
+  <td style="text-align:center; vertical-align: middle;">
+    <% if !(sspjspec = SelfServicePrintJobSpec.find_by(print_job_spec: print_job_spec )) %>
+      <%= link_to 'Δημιουργία', new_self_service_print_job_spec_path( print_job_spec ) %>
+    <% else %>
+      <% if not sspjspec.active %>
+        <span style="color: red">ανενεργή</span>
+      <% else %>
+        <span style="color: green">ΕΝΕΡΓΗ</span>
+      <% end %>
+      <br/>
+      <strong><%= sspjspec.self_service_generated_files&.count %></strong> αρχεία.<br/>
+      <strong><%= sspjspec.self_generated_emails&.succesfull&.count %></strong> email.<br/>
+      <% if sspjspec.self_generated_emails&.failed&.count > 0 %>
+        <%= sspjspec.self_generated_emails&.failed&.count %> failures<br/>
+      <% end %>
+      <%= link_to 'Προβολή', self_service_print_job_spec_path( sspjspec ) %>
+    <% end %>
+  </td>
+  <td style="text-align:center; vertical-align: middle;">
+    <p>
+    <% if !File.exist? "#{Rails.root}/printings/#{print_job_spec.user.email}/#{print_job_spec.id}/#{print_job_spec.id}.tar" %>
+      <%= button_to "δημιουργία", backup_print_job_spec_url(print_job_spec) %><br/>
+    <% else %>
+      <% if print_job_spec.status == PrintJobSpec::STATUS[ :backup ] %>
+        Διαδικασία backup σε εξέλιξη.<br/>
+        Παρακαλώ κάντε refresh.
+      <% else %>
+        <%= link_to "κατέβασμα", download_backup_print_job_spec_url( print_job_spec ) %><br/>
+        <%= button_to "ενημέρωση", backup_print_job_spec_url(print_job_spec) %>
+      <% end %>
+    <% end %>
+    </p>
+  </td>
+
+  <!-- Messages are not actually printed -->
+  <% if print_job_spec.messages %>
+    <% print_job_spec.messages.split(".").each do |msg| %>
+      <li> <% msg %>. </li>
+    <% end %>
+  <% end %>
+
+  <td class="edit">
+    <% if PrintJob.find_by(print_job_spec: print_job_spec) %>
+      η εργασία εκτελείται
+    <% else %>
+      <%= link_to "Επεξεργασία", edit_print_job_spec_path( print_job_spec ) %>
+    <% end %>
+  </td>
+  <td>
+    <span title="Άμεση διαγραφή εργασίας και διαγραφή αρχείων">
+      <%= button_to "X", print_job_spec, method: :delete, style: "margin: 0.5rem; color: red", form: {data: { turbo_confirm: "Are you sure?" }}  %>
+    </span>
+  </td>
+
+</tr>

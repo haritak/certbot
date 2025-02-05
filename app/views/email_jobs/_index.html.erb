@@ -1,0 +1,50 @@
+<%= stylesheet_link_tag "self_generated_emails.css" %>
+
+<h2><%= @email_job_spec.print_job_spec.to_s %> Email που έχουν αποσταλεί</h2>
+<% if @email_jobs.count == 0 %>
+  <p>Δεν έχουν δημιουργηθεί emails ακόμα.</p> 
+<% else %>
+  <% if @email_job_spec.email_jobs.failed.count > 0 %>
+    <p> Υπάρχουν <%= @email_job_spec.email_jobs.failed.count  %> μηνύματα που εμφάνισαν λάθη. 
+    <%= link_to "επαναποστολή όλων", email_job_spec_resend_failed_path( @email_job_spec ) %>
+    </p>
+  <% end %>
+
+  <%== pagy_nav( @pagynated_emails ) %>
+  <div id="email_jobs">
+    <table border="5">
+      <tr align="center">
+        <td> id </td>
+        <!-- xjbid -->
+        <!-- email spec id -->
+        <td> εγγραφή αρχείου CSV </td>
+        <td> ημερομηνία αποστολής</td>
+        <td> κατάσταση </td>
+        <td> <!--retries left--></td>
+        <td> actions </td>
+      </tr>
+      <% @email_jobs.each do |email_job| %>
+        <tr class="self_generated_email_row">
+          <td> <%= email_job.id %> </td>
+          <!-- email_job.execution_job_id -->
+          <!-- email_job.email_job_spec.id -->
+          <td> <%= email_job.csv_entry %> </td>
+          <td> <%= email_job.updated_at %> </td>
+          <td>
+            <% if email_job.status == "SENT" %>
+              <div style="color: green"> <%= email_job.status %> </div>
+            <% else %>
+              <div style="color: red"> <%= email_job.status %> </div>
+            <% end %>
+          </td>
+          <td> <% email_job.retries_left %> </td>
+          <td>
+            <%= link_to "επαναποστολή", resend_email_job_path( email_job ) %>
+            <% button_to "Destroy", email_job, method: :delete %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <%== pagy_nav( @pagynated_emails ) %>
+<% end %>

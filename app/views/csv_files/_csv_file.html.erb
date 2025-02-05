@@ -1,0 +1,12 @@
+<tr>
+  <td><%= csv_file.filename %> </td>
+  <td> uploaded by <%= csv_file.user.email %></td>
+  <td>
+      <%= !csv_file.csvfile.attached? ? "λείπει το αρχείο" :
+        (link_to "download", rails_blob_path( csv_file.csvfile ) ) %>
+  </td>
+  <td>
+    <%= button_to "Άμεση διαγραφή", csv_file, method: :delete, form: {data: { turbo_confirm: "Are you sure?" }}  %>
+  </td>
+</tr>
+

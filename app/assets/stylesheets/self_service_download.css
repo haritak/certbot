@@ -1,0 +1,41 @@
+div.prepare_self_service_certificate {
+  background-color: #088F8F;
+  color: lightgray;
+  margin: auto;
+  width: fit-content;
+  border: 0.25rem solid;
+  padding: 2rem;
+}
+
+
+div.prepare_self_service_certificate h1 {
+  text-align: center;
+}
+
+div.prepare_self_service_certificate select { 
+  margin: 0.25rem;
+  border: 0.125rem solid black;
+  border-radius: 0.25rem;
+}
+div.prepare_self_service_certificate input {
+  margin: 0.25rem;
+  border: 0.125rem solid black;
+  border-radius: 0.25rem;
+}
+div.prepare_self_service_certificate .input_button {
+  display: block;
+  margin: auto;
+  border: 0.125rem solid black;
+  border-radius: 0.25rem;
+  width: fit-content;
+}
+
+div.prepare_self_service_certificate select:focus {
+  border: 0.125rem solid cyan;
+}
+div.prepare_self_service_certificate input:focus {
+  border: 0.125rem solid cyan;
+}
+div.prepare_self_service_certificate button:focus {
+  border: 0.125rem solid cyan;
+}

@@ -1,0 +1,14 @@
+<tr>
+  <td><%= odt_file.system ? "(system)" : "" %></td>
+  <td><%= odt_file.filename %> </td>
+  <td> uploaded by <%= odt_file.user.email %></td>
+  <td>
+      <%= !odt_file.odtfile.attached? ? "λείπει το αρχείο" :
+        (link_to "download", rails_blob_path( odt_file.odtfile ) ) %>
+  </td>
+  <td>
+    <% if current_user.is_admin? or !odt_file.system %>
+      <%= button_to "Άμεση διαγραφή", odt_file, method: :delete,form: {data: { turbo_confirm: "Are you sure?" }}  %>
+      <% end %>
+  </td>
+</tr>

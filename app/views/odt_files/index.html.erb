@@ -1,0 +1,25 @@
+<p>
+<code>Παράδειγμα πρότυπου αρχείου:
+  <a href="https://server42.pdekritis.gr/static_content/samples/templates/sample.odt">sample.odt</a>.
+  Περισσότερα παραδείγματα <a href="https://server42.pdekritis.gr/static_content/samples/templates">εδώ</a>
+</code>
+</p>
+
+ <h1> Διαθέσιμα πρότυπα αρχεία</h1>
+<table>
+  <% @OdtFiles.each do |odt_file| %>
+    <%= render odt_file %>
+  <% end %>
+</table>
+
+<p/>
+
+<% if @OdtFiles.count == 0 %>
+  <p>Δεν υπάρχουν πρότυπα αρχεία.</p>
+<% end %>
+
+<div>
+  <%= turbo_frame_tag "new_odt_file", target: "_top" do %>
+    <%= link_to "Ανέβασμα νέου πρότυπου", new_odt_file_path, data: { turbo_frame: "new_odt_file" } %>
+  <% end %>
+</div>

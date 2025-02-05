@@ -1,0 +1,14 @@
+Για τον υπολογισμό του AUTH PLAIN : 
+
+echo -ne "\0haritak\0*******"|base64
+
+
+HELO server42.pdekritis.gr
+AUTH PLAIN (και ότι μας έβγαλε η παραπάνω εντολή)
+MAIL FROM: <haritak@sch.gr>
+RCPT TO: <charitakis.ioannis@gmail.com>
+
+DATA
+τεστ
+.
+

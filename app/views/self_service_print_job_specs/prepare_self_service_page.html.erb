@@ -1,0 +1,56 @@
+<%= stylesheet_link_tag @self_service_print_job_spec.css %> <!-- "self_service_download.css" %> -->
+<p align="center">
+<img src='/public/<%= @self_service_print_job_spec.banner %>'/>
+</p>
+<div class="prepare_self_service_certificate">
+  <h1><%= @self_service_print_job_spec.title %></h1>
+
+  <%if @self_service_print_job_spec.active? %>
+    <%= form_with do |form| %>
+      <%= form.hidden_field :self_service_print_job_spec_id, 
+        value: @self_service_print_job_spec.id %>
+      <table>
+        <% @form_parts.each do |form_part| %>
+          <tr>
+            <td><%= form.label form_part["odt_name"].to_sym,  form_part["view_name"] %></td>
+            <% if form_part["odt_name"] =~ /gender_acc/i %>
+              <td><%= form.collection_select( form_part["odt_name"].to_sym,
+                                             ["στον", "στην"], Proc.new{|ston| ston[2]}, Proc.new{ |ston| ston} )
+                                           %>
+              </td>
+            <% elsif form_part["odt_name"] =~ /gender_ignore/i %>
+              <td> </td>
+            <% elsif form_part["odt_name"] =~ /gender/i %>
+              <td><%= form.collection_select( form_part["odt_name"].to_sym,
+                                             ["ο", "η"], :itself, :itself )
+                                           %>
+              </td>
+            <% else %>
+              <% if form_part["odt_name"] =~ /email/i %>
+                <td><%= form.email_field form_part["odt_name"].to_sym %></td>
+              <% else %>
+                <td><%= form.text_field form_part["odt_name"].to_sym %></td>
+              <% end %>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
+
+
+      <%= form.submit "Δημιουργία αρχείου", class: "input_button" %>
+    <% end %>
+  <% else %>
+    <div>
+      Λυπούμαστε αλλά η φόρμα έχει κλείσει.
+    </div>
+  <% end %>
+  <p align="right">
+  <small>
+    <%= link_to 'Δήλωση προστασίας προσωπικών δεδομένων', url_for( "/public/#{@self_service_print_job_spec.gdpr}" ) %>
+  </small>
+  </p>
+</div>
+<p align="center">
+<small>Τμήμα Δ' - <a href="https://www.pdekritis.gr/">ΠΔΕ Κρήτης</a></small>
+</p>
+

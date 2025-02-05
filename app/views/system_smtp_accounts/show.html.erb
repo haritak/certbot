@@ -1,0 +1,9 @@
+<%= render @system_smtp_account %>
+
+<div>
+  <%= link_to "Edit", edit_system_smtp_account_path(@system_smtp_account) %> 
+  <%= link_to "Test", url_for(action: 'test_system_smtp_account', controller: 'system_smtp_accounts') %>
+  <%= link_to "Back", system_smtp_accounts_path %>
+
+  <%= button_to "Destroy this system smtp account", @system_smtp_account, method: :delete %>
+</div>

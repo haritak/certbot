@@ -1,0 +1,32 @@
+<%= stylesheet_link_tag "self_generated_emails.css" %>
+
+<tr class="self_generated_email_row" id="<%= dom_id self_generated_email %>" >
+
+    <td><%= self_generated_email.id %> </td>
+    <td><%= self_generated_email.recipient %> </td>
+    <td><%= self_generated_email.created_at %> </td>
+    <td><%= self_generated_email.updated_at %> </td>
+
+    <td>
+      <% if self_generated_email.status == "SENT" %>
+        <span style="color: green">
+          <%= self_generated_email.status %>
+        </span>
+      <% else %>
+        <span style="color: red">
+          <u><%= self_generated_email.status %></u>
+        </span>
+      <%end%>
+    </td>
+
+    <td>
+      <% url_to_attachment = self_generated_email.attachment_path.gsub( Rails.root.to_s, "" )%>
+      <%= link_to( "attachment", url_for( url_to_attachment ) )%>
+    </td>
+    <td>
+      delete
+    </td>
+    <td>
+      <%= link_to( "resend", resend_self_generated_email_path( self_generated_email  ) ) %>
+    </td>
+</tr>

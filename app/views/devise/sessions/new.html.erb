@@ -1,0 +1,48 @@
+<center>
+  <img width="60px" src='/public/saites_logo.svg'/> 
+<!-- (ych)
+  Rails 7 uses turbo.
+  When using turbo, devise doesn't show alert/notice (flash) messages.
+
+  Based on this :
+
+  https://stackoverflow.com/questions/70400958/error-form-responses-must-redirect-to-another-location
+
+  we disabled turbo for all the forms that had this problem (devise forms).
+
+  Therefore this file differs from the original only due to , data: {turbo: false}
+  which is there to disable turbo for the form.
+
+  Note: Initial solution described here:
+  https://stackoverflow.com/questions/70471054/rails-7-devise-not-seeing-flash-messages-from-devise
+  didn't work
+-->
+
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {turbo: false}) do |f| %>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password, autocomplete: "current-password" %>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="field">
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit 'Σύνδεση' %>
+  </div>
+<% end %>
+
+<div style="margin:10rem auto 1rem auto;">
+    <%= render "devise/shared/links" %>
+</div>
+</center>

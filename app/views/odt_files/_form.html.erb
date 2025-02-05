@@ -1,0 +1,25 @@
+<%= form_with( model: @odt_file, id: "odf_file_form" ) do |form| %>
+  <% if @odt_file.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@odt_file.errors.count, "error") %> prohibited the ODT file from being saved:</h2>
+      <ul>
+        <% @odt_file.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.file_field :odtfile, accept: "application/vnd.oasis.opendocument.text" %>
+  <% if current_user.is_admin? %>
+    <%= form.check_box( :system )  %> <span title="Check to make the file available to all users.">System file.</span>
+  <% end %>
+
+  <%= form.submit 'ανέβασμα επιλεγμένου αρχείου' %>
+
+  <p/>
+  <small>
+  Σημείωση: Αν χρησιμοποιούνται ιδιαίτερες γραμματοσειρές επικοινωνήστε με τους διαχειριστές ώστε να εγκατασταθούν στον server.
+  </small>
+
+<% end %>

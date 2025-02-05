@@ -1,0 +1,7 @@
+<!-- Using turbo here :
+ Based on : https://bhserna.com/inline-crud-hotwire.html
+ Full tutorial (TODO) : https://turbo.hotwired.dev/handbook/introduction -->
+<%= turbo_stream.update @odt_file do %>
+    <%= render "form", product: @odt_file %>
+<% end %>
+

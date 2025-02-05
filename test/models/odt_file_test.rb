@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: odt_files
+#
+#  id         :bigint           not null, primary key
+#  filename   :string(255)
+#  system     :boolean          default(FALSE)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :bigint           not null
+#
+# Indexes
+#
+#  index_odt_files_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
+require "test_helper"
+
+class OdtFileTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end

@@ -1,0 +1,124 @@
+<%= form_with(model: self_service_print_job_spec) do |form| %>
+  <% if self_service_print_job_spec.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(self_service_print_job_spec.errors.count, "error") %> prohibited this self_service_print_job_spec from being saved:</h2>
+
+      <ul>
+        <% self_service_print_job_spec.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h2>Αρχείο template Otd</h2> 
+  <%= print_job_spec.to_s %> :
+  <%= link_to 'template.odt',  rails_blob_path( print_job_spec.odt_file.odtfile ) %>
+  <%= form.hidden_field :print_job_spec_id, value: print_job_spec.id %>
+
+  <h2>URL</h2> 
+  <%= self_service_prepare_url( secret_url_part: self_service_print_job_spec.secret_url_part) %>
+  <%= form.hidden_field :secret_url_part, value: self_service_print_job_spec.secret_url_part %>
+
+  <h2>Τίτλος φόρμας</h2>
+  <% form.label :title, style: "display: block" %>
+  <%= form.text_field :title %>
+
+  <h2>Ενεργοποίηση</h2>
+  <% form.label :active, style: "display: inline-block" %>
+  Ενεργοποίηση φόρμας : <%= form.check_box :active %>
+
+<h2>Καθορισμός πεδίων φόρμας</h2>
+Το παρακάτω πεδίο:
+<ul>
+  <li>Είναι JSON formatted</li>
+  <li>Κάνει την αντιστοιχία των πεδίων της φόρμας με τα πεδία του odt template</li>
+  <ul>
+    <li><em>view</em>_name είναι το όνομα του πεδίου όπως θα φαίνεται στην online φόρμα</li>
+    <li><em>odt_name</em> είναι το όνομα του αντίστοιχου πεδίο στο odt template αρχείο</li>
+  </ul>
+  <li>Το GENDER και το EMAIL πρέπει να υπάρχουν υποχρεωτικά.</li>
+</ul>
+
+    <% form.label :field_names, 
+      style: "display: block", 
+      title: "Αντιστοιχία των πεδίων της φόρμας με τα πεδία του odt template" %>
+    <%= form.text_area :field_names, cols: 50, rows: 10,
+      title: "Αντιστοιχία των πεδίων της φόρμας με τα πεδία του odt template. "+
+      "JSON formatted. Απαραίτητα πεδία : GENDER και EMAIL"
+    %>
+
+  <div>
+    <% form.label :validate_client_email, style: "display: inline-block" %>
+    <% form.check_box :validate_client_email %> 
+  </div>
+
+
+  <h2>Τρόπος παραλαβής αρχείου</h2>
+  <h3>άμεση παραλαβή</h3>
+  <p>
+  Σημείωση: Το αρχείο χρειάζεται λίγο χρόνο να ετοιμαστεί, ο οποίος αυξάνεται 
+  όσο αυξάνεται ο φόρτος εργασίας του server. 
+  </p>
+  
+  <p>
+  Συνήθως απαιτείται από τον χρήστη
+  να κάνει ένα - δυο refresh. 
+  </p>
+  
+  <p>
+  Αν όμως ο φόρτος είναι μεγάλος μπορεί να χρειαστεί
+  μέχρι και 20 λεπτά για να ετοιμαστεί το αρχείο του. Σε αυτή την περίπτωση καλύτερα 
+  να αποστέλεται email.
+  </p>
+  <div>
+    <% form.label :direct_download, style: "display: inline-block" %>
+    Άμεση παραλαβή του αρχείου 
+    <%= form.check_box :direct_download %>
+  </div>
+  <h3>με email</h3>
+  <p>Σημείωση : για την αποστολή email απαιτείται λογαριασμός SMTP <em>συστήματος</em>.</p>
+  <table>
+    <tr>
+      <td>
+        <% form.label :send_email, style: "display: inline-block" %>
+        Αποστολή του αρχείου με email
+      </td>
+      <td>
+        <%= form.check_box :send_email %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <% form.label :smtp_account_id %>
+        Λογαριασμός SMTP
+      </td>
+      <td>
+        <%= form.collection_select( :smtp_account_id,
+                                   SystemSmtpAccount.all, 
+                                   :id, :long_description, prompt: true) %>
+      </td>
+    </tr>
+  </table>
+
+  <h2>Παρουσίαση</h2>
+
+  <h3>css αρχείο</h3>
+  <p>Το αρχείο θα πρέπει να υπάρχει ήδη στον server στον φάκελο <code>assets</code></p>
+  <% form.label :css, style: "display: block" %>
+  <%= form.text_field :css %>
+
+  <h3>banner αρχείο</h3>
+  <p>Το αρχείο θα πρέπει να υπάρχει ήδη στον server στον φάκελο <code>public</code></p>
+  <% form.label :banner, style: "display: block" %>
+  <%= form.text_field :banner %>
+
+  <h3>gdpr αρχείο</h3>
+  <p>Το αρχείο θα πρέπει να υπάρχει ήδη στον server στον φάκελο <code>public</code></p>
+  <% form.label :gdpr, style: "display: block" %>
+  <%= form.text_field :gdpr %>
+
+  <div>
+    <%= form.submit 'Αποθήκευση φόρμας' %>
+  </div>
+<% end %>

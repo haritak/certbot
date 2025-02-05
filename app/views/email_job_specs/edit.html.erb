@@ -1,0 +1,7 @@
+<h1>Προδιαγραφές εργασίας email</h1>
+
+<%= render "form", email_job_spec: @email_job_spec, 
+  print_job_spec: @email_job_spec.print_job_spec %>
+
+<%= link_to "Ακύρωση ενημέρωσης", @email_job_spec %>
+<% link_to "Back to home", root_path %>

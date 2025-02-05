@@ -1,0 +1,87 @@
+<%= form_with(model: smtp_account) do |form| %>
+  <% if smtp_account.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(smtp_account.errors.count, "error") %>
+    prohibited this smtp_account from being saved:</h2>
+
+      <ul>
+        <% smtp_account.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p><small>
+    <ul>
+      <li>όλες οι ρυθμίσεις εκτός της περιγραφής αποθηκεύονται κρυπτογραφημένες με κλειδί συστήματος</li>
+    </ul>
+  </small></p>
+
+  <table>
+    <tr>
+      <th></th>
+      <th></th>
+      <th><em>Παραδείγματα</em></th>
+    </tr>
+  <tr>
+    <% form.label :description, style: "display: block" %>
+    <td>Περιγραφή</td>
+    <td><%= form.text_field :description %></td>
+    <td><em>πχ Λογαριασμός αποστολής βεβαιώσεων 6ου συνδρείου</em></td>
+  </tr>
+
+  <tr>
+    <% form.label :from, style: "display: block" %>
+    <td>Αποστολέας</td>
+    <td><%= form.text_field :from %> </td>
+    <td><em>πχ haritak@sch.gr</em></td>
+  </tr>
+
+  <tr>
+    <% form.label :server, style: "display: block" %>
+    <td>Εξυπηρετητής</td>
+    <td><%= form.text_field :server %> </td>
+    <td><em>πχ mail.sch.gr</em></td>
+  </tr>
+
+  <tr>
+    <% form.label :port, style: "display: block" %>
+    <td>Πόρτα εξυπηρετητή</td>
+    <td><%= form.number_field :port %> </td>
+    <td><em>πχ 587</em></td>
+  </tr>
+
+  <tr>
+    <% form.label :username, style: "display: block" %>
+    <td>Όνομα χρήστη</td>
+    <td><%= form.password_field :username %> </td>
+    <td><em>πχ haritak</em></td>
+  </tr>
+
+  <tr>
+    <% form.label :password, style: "display: block" %>
+    <td>Κωδικός</td>
+    <td><%= form.password_field :password %> </td>
+    <td></td>
+  </tr>
+  </table>
+  <tr>
+    <% form.label :pin, style: "display: block" %>
+    <td>Pin κρυπτογράφησης για όνομα και κωδικό χρήστη</td>
+    <td><%= form.password_field :password_pin %> (*)</td>
+  </tr>
+
+
+  <div>
+    <p>
+    <%= form.submit 'Αποθήκευση λογαριασμού' %>
+    </p>
+  </div>
+  <p>
+    <small>(*)
+        Το pin δεν αποθηκεύεται και απαιτείται τόσο για την χρήση
+        όσο και για την ενημέρωση username και password
+    </small>
+  </p>
+<% end %>

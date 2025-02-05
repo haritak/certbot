@@ -1,0 +1,8 @@
+<h1>Επεξεργασία SMTP λογαριασμού</h1>
+
+<%= render "form", smtp_account: @smtp_account %>
+
+<div>
+  <% link_to "προβολή/δοκιμή", @smtp_account %>
+  <%= link_to "επιστροφή", smtp_accounts_path( @smtp_account.user ) %>
+</div>

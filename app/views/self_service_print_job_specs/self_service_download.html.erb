@@ -1,0 +1,47 @@
+<%= stylesheet_link_tag @myJob.self_service_print_job_spec.css %> <!-- "self_service_download.css" %> -->
+<p align="center">
+  <img src='/public/<%= @myJob.self_service_print_job_spec.banner %>'/>
+</p>
+
+<div class="prepare_self_service_certificate">
+
+  <h1><% @myJob.self_service_print_job_spec.id %></h1>
+  <h2><% @user_specific_page %></h2>
+
+  <p> Το αρχείο με τα παρακάτω στοιχεία : </p>
+
+  <ul>
+    <% @field_names.each do |field_name| %>
+      <li><i><%= field_name["view_name"] %> </i>:  
+        <%= @field_values[ field_name["odt_name"] ] %> 
+      </li>
+    <% end %>
+  </ul>
+
+  <% jobSpec = @myJob.self_service_print_job_spec.print_job_spec %>
+  <% user_email = jobSpec.user.email %>
+  <% user_specific_page = @myJob.user_specific_page %>
+  <% pdf_file = "#{Rails.root}/self_generated_files/#{user_email}/#{jobSpec.id}/#{user_specific_page}/certificate.pdf" %>
+  <% url_file = "/self_generated_files/#{user_email}/#{jobSpec.id}/#{user_specific_page}/certificate.pdf" %> <!-- XXX STATIC! -->
+  <% if File.exist? pdf_file %>
+    Είναι έτοιμο. Μπορείτε να το κατεβάσετε κάνοντας κλικ εδώ : 
+    <%= link_to 'Αρχείο βεβαίωσης', url_for( url_file ) %>
+    <% if @myJob.self_service_print_job_spec.send_email %>
+      <p>Επίσης, έχει αποσταλλεί με email στην παραπάνω διεύθυνση.</p>
+    <% end %>
+  <% else %>
+    <script>
+      var timeoutId = 
+        window.setTimeout(function() { console.log("reloading..."); window.location.reload(); }, 5000);
+      window.addEventListener( "click", function() { window.clearTimeout( timeoutId ) } );
+    </script>
+    προετοιμάζεται. Δοκιμάστε να κάνετε μία <%= link_to 'ανανέωση', self_service_download_path( user_specific_page: @myJob.user_specific_page ) %> της σελίδας.
+    <% if @myJob.self_service_print_job_spec.send_email %>
+      <p>Όταν είναι έτοιμο θα αποσταλλεί με email στην παραπάνω διεύθυνση.</p>
+    <% end %>
+  <% end %>
+
+</div>
+<p align="center">
+<small>Τμήμα Δ' - <a href="https://www.pdekritis.gr/">ΠΔΕ Κρήτης</a></small>
+</p>

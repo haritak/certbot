@@ -1,0 +1,12 @@
+<tr>
+  <td><%= fixed_attachment.email_filename %> </td>
+  <td> uploaded by <%= fixed_attachment.user.email %></td>
+  <td>
+      <%= !fixed_attachment.fixed.attached? ? "λείπει το αρχείο" :
+        (link_to "download", rails_blob_path( fixed_attachment.fixed ) ) %>
+  </td>
+  <td>
+    <%= button_to "Άμεση διαγραφή", fixed_attachment, method: :delete, form: {data: { turbo_confirm: "Are you sure?" }}  %>
+  </td>
+</tr>
+

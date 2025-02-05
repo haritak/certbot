@@ -1,0 +1,43 @@
+<h1>Φόρμα αυτόνομου κατεβάσματος</h1>
+
+<%= render @self_service_print_job_spec %>
+
+<div>
+  <%= link_to "Ενημέρωση", edit_self_service_print_job_spec_path(@self_service_print_job_spec) %> |
+  <%= link_to "Πίσω", root_path %>
+
+</div>
+
+<hr/>
+
+<h1>Κατάσταση αρχείων αιτούντων</h1>
+Εμφανίζονται τα 50 πρώτα
+<div id="self_service_generated_files">
+  <table>
+  <% @self_service_generated_files.each do |self_service_generated_file| %>
+    <%= render self_service_generated_file %>
+  <% end %>
+  </table>
+</div>
+<h3>
+<%= link_to "λίστα όλων των αρχείων", self_service_generated_files_path( @self_service_print_job_spec ) %>
+</h3>
+
+<h1>Κατάσταση emails αιτούντων</h1>
+Εμφανίζονται τα 50 πρώτα
+<div id="self_service_generated_files">
+  <table>
+  <% @self_generated_emails.each do |email| %>
+    <%= render email %>
+  <% end %>
+  </table>
+</div>
+<h3>
+  <%= link_to "λίστα όλων των email", self_generated_emails_self_service_print_job_spec_path( @self_service_print_job_spec ) %>
+</h3>
+
+<div style="display: flex">
+  <div style="margin: 0 0 0 auto; border: 1px solid red">
+    <%= button_to "Άμεση διαγραφή φόρμας μαζί με το ιστορικό των αρχείων και των email που έχουν παραληφθεί", @self_service_print_job_spec, method: :delete, title: "Δεν υπάρχει δεύτερη ερώτηση. Η διαγραφή είναι άμεση.", form: {data: { turbo_confirm: "Are you sure?" }}  %>
+  </div>
+</div>

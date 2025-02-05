@@ -1,0 +1,31 @@
+<div id="<%= dom_id self_service_generated_file %>">
+  <tr class="self_generated_file_row">
+    <td> <%= self_service_generated_file.id %> </td>
+    <td> 
+      <% if self_service_generated_file.status == SelfServiceGeneratedFile::STATUS[:created] %>
+        <span style="color: green">
+          <%= self_service_generated_file.status %>
+        </span>
+      <% else %>
+        <span style="color: red">
+          <%= self_service_generated_file.status %>
+        </span>
+      <%end%>
+    </td>
+    <td>
+    <%= link_to "PrinJobSpec",
+      self_service_print_job_spec_path( self_service_generated_file.self_service_print_job_spec ) %> 
+    </td>
+    <td>
+      <small><%= self_service_generated_file.self_service_print_job.field_values %></small>
+    </td>
+    <td>
+      <span title="<%= self_service_generated_file.path %>">
+        <%= link_to 'download', download_self_service_generated_file_path( self_service_generated_file ) %>
+      </span>
+    </td>
+    <td>
+      <%= link_to "regenerate", regenerate_self_service_generated_file_path( self_service_generated_file  ) %>
+    </td>
+  </tr>
+</div>

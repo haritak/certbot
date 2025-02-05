@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @email_job %>
+
+<div>
+  <%= link_to "Edit this email job", edit_email_job_path(@email_job) %> |
+  <%= link_to "Back to email jobs", email_jobs_path %>
+
+  <%= button_to "Destroy this email job", @email_job, method: :delete %>
+</div>

@@ -1,0 +1,47 @@
+<%= stylesheet_link_tag "self_generated_files.css" %>
+
+<h1><%= @self_service_print_job_spec %> : δημιουργηθέντα αρχεία από χρήστες</h1>
+<% if @failed_generated_files.count > 0 %>
+  <h2>με σφάλματα</h2>
+  <table>
+    <tr>
+      <th>file_id</th><th>status</th><th>PrintJobSpec</th><th>request parameters</th><th>file</th><th></th>
+    </tr>
+    <% @failed_generated_files.each do |file| %>
+      <%= render file %>
+  <% end %>
+  </table>
+  <hr/>
+<%end%>
+
+
+
+<% if @self_service_generated_files.count > 0 %>
+  <div id="self_service_generated_files">
+    <%== pagy_nav(@pagynated_files) %>
+    <table>
+      <tr>
+        <th>file_id</th><th>status</th><th>PrintJobSpec</th><th>request parameters</th><th>file</th><th></th>
+      </tr>
+      <% @self_service_generated_files.each do |self_service_generated_file| %>
+        <%= render self_service_generated_file %>
+      <% end %>
+    </table>
+    <%== pagy_nav(@pagynated_files) %>
+  </div>
+
+  <div style="border: solid; border-color:red; display: flex; justify-content: space-between;">
+
+    <p>
+    <%= link_to 'άμεση διαγραφή όλων των odts', remove_all_odts_self_service_generated_file_path %>
+    </p>
+
+    <p>
+    <%= link_to 'άμεση διαγραφή όλων των pdfs (προσοχή, αν δεν έχουν σταλεί)', remove_all_pdfs_self_service_generated_file_path %>
+    </p>
+  </div>
+<% else %>
+  <p>
+    Δεν υπάρχουν αρχεία
+  </p>
+<% end %>

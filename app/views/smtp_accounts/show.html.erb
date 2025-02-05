@@ -1,0 +1,24 @@
+<h1>Πληροφορίες λογαριασμού</h1>
+<%= render @smtp_account %>
+
+<div>
+  <p>
+  <%= link_to "διόρθωση", edit_smtp_account_path(@smtp_account) %>,
+  <%= link_to "επιστροφή", smtp_accounts_path %>
+  </p>
+  <%= form_with url: url_for(action: 'test_smtp_account', controller: 'smtp_accounts') do |form| %>
+    <% if session[ :smtp_password_pin ] and session[ :smtp_password_pin ] != "" %>
+      <%= form.label :reset_password_pin %>
+    <% else %>
+      <%= form.label :password_pin %>
+    <% end %>
+    <%= form.password_field :smtp_password_pin %>
+    <%= form.submit "Αποστολή δοκιμαστικού email" %>
+  <% end %>
+
+  <div style="display: flex">
+    <div style="margin: 0 0 0 auto; border: 1px solid red">
+      <%= button_to "διαγραφή λογαριασμού", @smtp_account, method: :delete %>
+    </div>
+  </div>
+</div>

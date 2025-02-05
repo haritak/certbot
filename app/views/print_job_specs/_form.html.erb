@@ -1,0 +1,94 @@
+<script>
+  const bridge = {}
+</script>
+<script type="module">
+  import { dragOverHandler, dragLeaveHandler, dropHandler } from "custom/drag_n_drop"
+  bridge.doh = dragOverHandler
+  bridge.dlh = dragLeaveHandler
+  bridge.dh = dropHandler
+</script>
+
+
+<table border=1>
+  <tr hidden=true>
+    <th>Ανέβασμα νέου πρότυπου αρχείου</th>
+    <th>Ανέβασμα νέου αρχείου CSV</th>
+  </tr>
+  <tr hidden=true>
+    <td>
+      <%= render "odt_files/new" %>
+    </td>
+    <td>
+      <%= render "csv_files/new" %>
+    </td>
+  </tr>
+  <tr id="drop_zone" ondrop="bridge.dh(event);"
+                     ondragover="bridge.doh(event);" ondragleave="bridge.dlh(event);" >
+                     <td colspan="100%">
+                       <p/>
+                       <center id="drop_zone_txt">
+                         <h2>Προσθήκη νέου πρότυπου αρχείου ή αρχείου csv</h2>
+                         Ρίξτε με drag 'n drop ένα αρχείο odt/odp/ods/odg ή csv εδώ
+                       </center>
+                       <p/>
+                     </td>
+  </tr>
+</table>
+
+<%= form_with(model: print_job_spec) do |form| %>
+  <% if @print_job_spec.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@print_job_spec.errors.count, "error") %> prohibited this print_job_spec from being saved:</h2>
+      <ul>
+        <% @print_job_spec.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <tr>
+      <td>
+        <div>
+          <h2>Πρότυπο αρχείο</h2>
+
+          <div>
+            <%= form.collection_select( :odt_file_id, OdtFile.system.or(OdtFile.where(user: current_user)), :id, :filename, prompt: true) %>
+          </div>
+        </div>
+      </td>
+
+      <td>
+        <div>
+          <h2>Αρχείο Csv</h2>
+
+          <div>
+            <%= form.collection_select( :csv_file_id, CsvFile.where(user: current_user), :id, :filename, prompt: true) %>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <div>
+    <b>
+      Σημειώσεις / σχόλια<br/>
+      <% form.label :comment, style: "display: block" %>
+    </b>
+    <%= form.text_area :comment, cols: 60 %>
+  </div>
+
+  <% if not print_job_spec.persisted? %>
+    <div>
+      <b><% form.label :auto_start_file_generation, style: "display: inline-block" %>
+      Άμεση εκκίνηση της εργασίας μετά την αποθήκευσή της</b>
+      <%= form.check_box :auto_start_file_generation, checked: true %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit 'Αποθήκευση εργασίας'%>
+  </div>
+<% end %>
+

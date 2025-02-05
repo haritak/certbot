@@ -1,0 +1,27 @@
+<%= form_with(model: self_service_generated_file) do |form| %>
+  <% if self_service_generated_file.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(self_service_generated_file.errors.count, "error") %> prohibited this self_service_generated_file from being saved:</h2>
+
+      <ul>
+        <% self_service_generated_file.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :self_service_print_job_id, style: "display: block" %>
+    <%= form.text_field :self_service_print_job_id %>
+  </div>
+
+  <div>
+    <%= form.label :path, style: "display: block" %>
+    <%= form.text_field :path %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Σαΐτες</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <!-- stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" -->
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <div class="top_menu" style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+      <% if user_signed_in? %> 
+        <div class="menu_button" ><%= link_to t('home'), root_path %> </div>
+        <div class="menu_button" ><%= link_to t('Πρότυπα'), odt_files_path %></div>
+        <div class="menu_button" ><%= link_to t('αρχεία CSV'), csv_files_path %></div>
+        <div class="menu_button" ><%= link_to t('σταθερά Συνημμένα'), fixed_attachments_path %></div>
+        <!-- <div class="menu_button" ><% link_to t('δημιουργημένα αρχεία'), generated_files_path %></div>
+        <div class="menu_button" ><% link_to t('απεσταλμένα emails'), email_jobs_path %></div> -->
+        <div class="menu_button" style="margin-left: auto;">
+          <%= link_to t('ρυθμίσεις'), settings_path( current_user ) %>
+        </div>
+      <div class="menu_button" ><%= link_to t('οι SMTP λογαριασμοί μου'), smtp_accounts_path( current_user ) %></div>
+
+        <% if current_user.is_admin? %>
+          <div class="menu_button" ><%= link_to t('system smtp accounts'), system_smtp_accounts_path %></div>
+          <div class="menu_button" ><%= link_to t('users'), users_path %></div>
+          <div class="menu_button" ><%= link_to t('sidekiq'), sidekiq_jobs_path %></div>
+        <% end %>
+        <div class="menu_button" >
+          <span title="Αποσύνδεση">
+          <%= button_to current_user.email, destroy_user_session_path, method: :delete, data: { turbo: false } %>
+          </span>
+        </div>
+      <% end %>
+      </hr>
+    </div>
+    <center>
+      <p class="notice" style="color: green"><%= notice %></p> 
+      <p class="alert" style="color: red"><%= alert %></p>
+    </center>
+
+
+    <div class="main_body">
+    <%= yield %>
+    </div>
+
+    <div class="footer" style="height: 5%; text-align:center;">
+      <div> έκδοση εφαρμογής : 0.7.0 </div>
+      <div> ΠΔΕ Κρήτης - Τμήμα Δ </div>
+      <!-- TODO get the version from git but cache it in a variable so that we don't need to execute anything to get it -->
+    </div>
+  </body>
+</html>

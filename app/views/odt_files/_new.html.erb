@@ -1,0 +1,6 @@
+<!-- Using turbo here :
+ Based on : https://bhserna.com/inline-crud-hotwire.html
+ Full tutorial (TODO) : https://turbo.hotwired.dev/handbook/introduction -->
+<%= turbo_frame_tag @odt_file do %>
+  <%= render "odt_files/form" %> <!-- called from within print_job_specs/new -->
+<% end %>

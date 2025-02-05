@@ -1,0 +1,34 @@
+# https://github.com/mperham/sidekiq/blob/main/examples/config.yml
+#
+# Sample configuration file for Sidekiq.
+# Options here can still be overridden by cmd line args.
+# Place this file at config/sidekiq.yml and Sidekiq will
+# pick it up automatically.
+---
+:timeout: 25
+
+# Sidekiq will run this file through ERB when reading it so you can
+# even put in dynamic logic, like a host-specific queue.
+# http://www.mikeperham.com/2013/11/13/advanced-sidekiq-host-specific-queues/
+#
+# https://github.com/mperham/sidekiq/wiki/Advanced-Options#capsules
+# Starting in 7.0, Sidekiq allows you to declare Capsules which can provide single-threaded or serial execution of a queue.
+#
+:queues:
+  - critical
+  - default
+    #- <%= `hostname`.strip %>
+  - low
+
+# you can override concurrency based on environment
+production:
+  :verbose: false
+  :concurrency: 5
+development:
+  :verbose: true
+  :concurrency: 2
+
+
+# Note: there is one more queue (odt2pdf) defined in initializers/sidekiq.rb using capsules.
+# Read the docs:
+# https://github.com/sidekiq/sidekiq/wiki/Advanced-Options#capsules

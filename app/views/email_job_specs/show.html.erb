@@ -1,0 +1,28 @@
+<%= render @email_job_spec, print_job_spec: @email_job_spec.print_job_spec %>
+<p>
+<%= link_to "ενημέρωση προδιαγραφών", edit_email_job_spec_path(@email_job_spec) %> 
+</p>
+
+<div style="padding: 1rem;">
+  <span title="Άμεση αποστολή email προς τα επιλεγμένα Α/Α">
+  <%= button_to "Εκκίνηση εργασίας email", email_jobs_url, 
+    params: {email_job_spec: {id: @email_job_spec.id}}, 
+    style: "background: teal; padding: 1rem; color: lightgray;",
+    form: {data: { turbo_confirm: "Θα ξεκινήσει η διαδικασία αποστολής νέων email. Είστε σίγουρος/η ;" }}
+  %>
+  </span>
+</div>
+
+<div>
+  <table>
+    <tr>
+      <td style="background: pink;">
+        <%= button_to "'Αμεση διαγραφή της εργασίας μαζί με το ιστορικό των email", @email_job_spec, method: :delete, form: {data: { turbo_confirm: "Are you sure?" }} %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<p>
+<%= link_to " Back", root_path %>
+<p>

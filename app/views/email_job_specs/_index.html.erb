@@ -1,0 +1,38 @@
+<% if @email_job_specs.count > 0 %>
+  <h1>Εργασίες αποστολής eMail</h1>
+
+  <div id="email_job_specs">
+    <table border=1>
+      <tr>
+        <td>id</td>
+        <td>print_job_spec</td>
+        <td>Csv entries</td>
+        <td>attachment_pattern</td>
+        <td>status</td>
+        <td>actions</td>
+      </tr>
+      <% @email_job_specs.each do |email_job_spec| %>
+        <tr>
+          <td><%= email_job_spec.id %></td>
+          <td><%= email_job_spec.print_job_spec_id %></td>
+          <td>
+            <div title="<%= email_job_spec.csv_entries_to_array.join(", ") %>">
+              <%= email_job_spec.csv_entries %>
+            </div>
+          </td>
+          <td><%= email_job_spec.attachment_pattern %></td>
+          <td><%= email_job_spec.status %></td>
+          <td>
+            [<%= link_to "εμφάνισε", email_job_spec %>]
+            [<%= link_to "emails", generated_emails_email_job_spec_path( email_job_spec ) %>] <br/>
+            <%= button_to "Start", email_jobs_url, 
+              params: {email_job_spec: {id: email_job_spec.id}} %> 
+          </td>
+        <% end %>
+        </tr>
+    </table>
+  </div>
+
+  <!-- Καλύτερα η νέα εργασία να γίνεται απευθείας από το print_job -->
+  <% link_to "Νέα εργασία", new_email_job_spec_path %>
+<% end %>

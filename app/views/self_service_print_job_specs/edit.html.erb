@@ -1,0 +1,12 @@
+<h1>Ενημέρωση φόρμας</h1>
+
+<%= render "form", 
+  self_service_print_job_spec: @self_service_print_job_spec,
+  print_job_spec: @self_service_print_job_spec.print_job_spec
+%>
+
+<br>
+
+<div>
+  <%= link_to "Πίσω", root_path %>
+</div>

@@ -1,0 +1,58 @@
+<div id="user">
+  <!-- <tr align="center"> -->
+  <!-- <td></td> -->
+  <!-- <td>id</td> -->
+  <!-- <td>email</td> -->
+  <!-- <td>admin</td> -->
+      <!-- >encrypted_password</ -->
+      <!-- >reset_password_sent_at</ -->
+      <!-- >remember_created_at</ -->
+      <!-- >sign_in_count</ -->
+      <!-- <td>current_sign_in_at</td> -->
+      <!-- <td>last_sign_in_at</td> -->
+      <!-- <td>current_sign_in_ip</td> -->
+      <!-- <td>last_sign_in_ip</td> -->
+      <!-- >confirmed_at</ -->
+      <!-- >confirmation_sent_at</ -->
+      <!-- >unconfirmed_email</ -->
+      <!-- >failed_attempts</ -->
+      <!-- >locked_at</ -->
+      <!-- >created_at</ -->
+      <!-- >updated_at</ -->
+      <!-- <td>Selected SMTP Account</td> -->
+      <!-- </tr> -->
+    <tr> 
+      <td><%= link_to 'edit', edit_settings_path( user ) %></td>
+      <% if user.admin %>
+        <td>admin</td>
+      <%else%>
+        <td><%= user.activated ? "enabled" : "DISABLED" %></td>
+      <%end%>
+      <td><%= user.id %></td>
+      <td><%= user.email %></td>
+      <!-- ><%= user.encrypted_password %></ -->
+      <!-- ><%= user.reset_password_sent_at %></ -->
+      <!-- ><%= user.remember_created_at %></ -->
+      <!-- ><%= user.sign_in_count %></ -->
+      <!-- <td><%= user.current_sign_in_at %></td> -->
+      <!-- <td><%= user.last_sign_in_at %></td> -->
+      <!-- <td><%= user.current_sign_in_ip %></td> -->
+      <!-- <td><%= user.last_sign_in_ip %></td> -->
+      <!-- ><%= user.confirmed_at %></ -->
+      <!-- ><%= user.confirmation_sent_at %></ -->
+      <!-- ><%= user.unconfirmed_email %></ -->
+      <!-- ><%= user.locked_at %></ -->
+      <!-- ><%= user.created_at %></ -->
+      <!-- ><%= user.updated_at %></ -->
+      <td>
+        SMTP account : 
+        <% if user.smtp_account %>
+          <%= user.smtp_account.id %> ( from <%= user.smtp_account.from %> )
+        <% else %>
+          (none)
+        <% end %>
+      </td>
+      <% if user.failed_attempts > 0 %>
+        <td>Failed attempts: <%= user.failed_attempts %></td>
+      <% end %>
+</div>

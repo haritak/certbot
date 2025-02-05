@@ -1,0 +1,30 @@
+# == Schema Information
+#
+# Table name: self_service_print_jobs
+#
+#  id                             :bigint           not null, primary key
+#  field_values                   :text(65535)
+#  recipient                      :string(255)
+#  user_specific_page             :string(255)
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  self_service_print_job_spec_id :bigint           not null
+#
+# Indexes
+#
+#  index_self_service_print_jobs_on_self_service_print_job_spec_id  (self_service_print_job_spec_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (self_service_print_job_spec_id => self_service_print_job_specs.id)
+#
+
+one:
+  self_service_print_job_spec: one
+  field_values: MyText
+  user_specific_page: MyString
+
+two:
+  self_service_print_job_spec: two
+  field_values: MyText
+  user_specific_page: MyString

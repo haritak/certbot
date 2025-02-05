@@ -1,0 +1,49 @@
+<table>
+  <tr>
+    <th>Α/Α</th>
+    <% csv_headers = print_job_spec&.get_csv_headers %>
+    <% csv_headers&.each do |header| %>
+      <th>
+        <%= header %>
+      </th>
+    <% end %>
+    <% if not show_all %>
+      <th>αρχείο</th>
+    <% end %>
+  </tr>
+  <% csv_entries = nil %>
+  <% if email_job_spec %>
+    <% if show_all %>
+      <% csv_entries = email_job_spec&.get_csv_entries_with_lineno %>
+    <% else %>
+      <% csv_entries = email_job_spec&.get_selected_csv_entries_with_lineno %>
+    <% end %>
+  <% else %>
+    <% csv_entries = print_job_spec&.get_selected_csv_entries_with_lineno %>
+  <% end %>
+
+  <% csv_entries&.each do |csv_line| %>
+    <% csv_line_no = csv_line[0] %>
+    <% csv_line_email = csv_line[1][-1] %>
+    <% odt_filename = "#{csv_line_no}_#{csv_line_email.strip}.odt" %>
+    <% csv_filename = "#{csv_line_no}_#{csv_line_email.strip}.pdf" %>
+    <tr>
+      <td> <%= csv_line_no %> </td>
+      <% csv_line[1].each do |value| %>
+        <td>
+          <%= value[1] %>
+        </td>
+      <% end %>
+
+      <% if not show_all %>
+        <td>
+          <% odtfile = email_job_spec.print_job_spec.generated_files.filename( odt_filename ).first %>
+          <% pdffile = email_job_spec.print_job_spec.generated_files.filename( csv_filename ).first %>
+
+          [<%= link_to "ODT", download_generated_file_path( odtfile ) %>]
+          [<%= link_to "PDF", download_generated_file_path( pdffile ) %>]
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

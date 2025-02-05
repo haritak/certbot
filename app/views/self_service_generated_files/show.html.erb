@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @self_service_generated_file %>
+
+<div>
+  <%= link_to "Edit this self service generated file", edit_self_service_generated_file_path(@self_service_generated_file) %> |
+  <%= link_to "Back to self service generated files", self_service_generated_files_path %>
+
+  <%= button_to "Destroy this self service generated file", @self_service_generated_file, method: :delete %>
+</div>

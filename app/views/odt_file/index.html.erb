@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Print job specs</h1>
+
+<div id="print_job_specs">
+  <% @print_job_specs.each do |print_job_spec| %>
+    <%= render print_job_spec %>
+    <p>
+      <%= link_to "Show this print job spec", print_job_spec %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New print job spec", new_print_job_spec_path %>

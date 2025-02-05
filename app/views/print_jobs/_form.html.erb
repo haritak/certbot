@@ -1,0 +1,22 @@
+<%= form_with(model: print_job) do |form| %>
+  <% if print_job.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(print_job.errors.count, "error") %> prohibited this print_job from being saved:</h2>
+
+      <ul>
+        <% print_job.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :print_job_spec_id, style: "display: block" %>
+    <%= form.text_field :print_job_spec_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

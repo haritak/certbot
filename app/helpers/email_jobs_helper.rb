@@ -1,0 +1,2 @@
+module EmailJobsHelper
+end

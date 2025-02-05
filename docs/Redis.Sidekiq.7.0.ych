@@ -1,0 +1,16 @@
+We use Sidekiq 7 since it allows queues to be executed by only one processor (serialy).
+Sidekiq 7 requires Redis 6.2.0 or greater.
+Redis officially supports Redis 6.2.0 or greater
+https://redis.io/docs/getting-started/installation/install-redis-on-linux/
+
+1.
+curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+
+2.
+bash
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+
+3.
+sudo apt-get update
+sudo apt-get install redis
+

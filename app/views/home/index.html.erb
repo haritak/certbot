@@ -1,0 +1,37 @@
+<% if user_signed_in? %> 
+
+  <% if current_user.custom_smtp_account? %>
+    <div style="display: flex;  ">
+      <div style="margin: 1rem 1rem 1rem auto">
+        <%= form_with url: url_for(action: 'set_session_password_pin', controller: 'settings') do |form| %>
+          <%= form.label :password_pin, "Password pin:" %>
+          <%= form.password_field :smtp_password_pin %>
+          <% if session[ :smtp_password_pin ] %>
+            <%= form.submit "Επανακαθορισμός password pin" %>
+          <% else %>
+            <%= form.submit "Ορισμός password pin" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if current_user.no_smtp_account? %>
+    <div class="alert" style="color: red">
+      Δεν έχει οριστεί <code>SMTP Server</code> για την αποστολή των emails.  Ο ορισμός του γίνεται από τις <code>Ρυθμίσεις (Settings)</code>.
+    </div>
+  <% end %>
+
+  <%= render "print_job_specs/index" %>
+  <!--
+    Not sure whether to permantly remove these..
+  < if current_user.is_admin? >
+    < render "print_jobs/index" >
+    < render "email_job_specs/index" >
+  < end >
+  -->
+
+<% else %>
+  <%= button_to t('devise.sessions.new.sign_in'), new_user_session_path, method: :get %> 
+<% end %>
+

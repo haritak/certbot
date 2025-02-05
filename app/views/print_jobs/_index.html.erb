@@ -1,0 +1,41 @@
+<% if @print_jobs.count > 0 %>
+  <h3>Pending/running print jobs</h3>
+
+  <div id="print_jobs">
+    <table border="5">
+      <tr align="center">
+        <td> user </td>
+        <td> execution job id </td>
+        <td> date submitted</td>
+        <td> actions </td>
+      </tr>
+      <% @print_jobs.each do |print_job| %>
+        <tr>
+          <td>
+            <%= print_job.print_job_spec.user.email %>
+          </td>
+          <td>
+            <%= print_job.execution_job_id %> 
+          </td>
+          <td>
+            <%= print_job.created_at %>
+          </td>
+          <td>
+            <% if current_user.is_admin? %>
+              <%= link_to "Show this print job", print_job %>
+              <%= button_to "Destroy this print job", print_job, method: :delete %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <% if false and current_user.is_admin? %>
+    <%= link_to "View Sidekiq jobs (executing jobs)",
+      sidekiq_web_path, target: :_blank %>
+  <% end %>
+<% end %>
+
+
+

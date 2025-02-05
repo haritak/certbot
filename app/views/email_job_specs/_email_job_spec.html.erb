@@ -1,0 +1,67 @@
+<div id="<%= dom_id email_job_spec %>">
+
+  <h2> Προδιαγραφές αποστολής δημιουργημένων αρχείων [Εργασίας <%= email_job_spec.print_job_spec.id %>] </h2>
+
+  <p>
+  Εκκινώντας την παρούσα εργασία θα αποσταλούν τα αντίστοιχα αρχεία στους
+  παρακάτω παραλήπτες.
+  </p>
+
+  <%= render 'email_job_specs/csv_entries', print_job_spec: print_job_spec, email_job_spec: email_job_spec, show_all: false %>
+
+  <% if not email_job_spec.csv_to_all? %>
+    <small><sup>*</sup>(Εμφανίζονται μόνο τα επιλεγμένα Α/Α)</small>
+  <% end %>
+
+  <p>
+    <strong> Τύπος συνημμένου (pdf/odt) : </strong>
+    <% if email_job_spec&.attachment_pattern == "" %>
+      pdf
+    <% else %>
+      <%= email_job_spec&.attachment_pattern %>
+    <% end %>
+  </p>
+
+  <h3>Μορφή εξερχόμενου email</h3>
+  <p><b>Cc:</b><%= email_job_spec&.cc %><br/>
+  <b>Bcc:</b> <%= email_job_spec&.bcc %></p>
+  <p>
+  <b>Θέμα:</b><%= email_job_spec&.subject %><br/>
+  <b>Κυρίως σώμα μηνύματος:</b>
+  <p>
+  <%= email_job_spec&.body %>
+  </p>
+
+  <h3>Λογαριασμός αποστολής email</h3>
+  <% if not email_job_spec&.smtp_account&.long_description %>
+      Δεν έχει οριστεί λογαριασμός.
+  <% else %>
+    Αποστολή μέσω email από τον λογαριασμό :
+    <ul>
+      <li>
+        <%= email_job_spec&.smtp_account&.long_description %>
+        <% if email_job_spec&.smtp_account&.custom_smtp_account? %>
+          <% if not session[ :smtp_password_pin ] or session[ :smtp_password_pin ] == "" %> 
+            (Δεν έχει οριστεί το password pin)
+          <% else %>
+            (το password pin έχει οριστεί)
+          <% end %>
+        <% end %>
+      </li>
+    </ul>
+  <% end %>
+  <h3>Σταθερό συνημμένο</h3>
+
+  <% if email_job_spec&.fixed_attachment == nil %>
+    Δεν υπάρχει
+  <% else %>
+    <p>
+    Όνομα αρχείου: <%= email_job_spec&.fixed_attachment&.fixed&.filename %>
+    </p>
+    <p>
+    Όνομα αρχείου όπως θα φαίνεται στο email: <%= email_job_spec&.fixed_attachment&.email_filename %>
+    </p>
+  <% end %>
+
+
+</div>

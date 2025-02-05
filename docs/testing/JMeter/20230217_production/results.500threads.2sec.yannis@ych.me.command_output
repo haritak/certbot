@@ -1,0 +1,18 @@
+haritak@haritakpc ~/c/d/t/J/20230217_production (main)> time ~/bin/jmeter/bin/jmeter -n -t CertBot_TestPlan.jmx -l results.500threads.2sec.yannis@ych.me.results_file -e -o results.500threads.2sec.yannis@ych.me
+Creating summariser <summary>
+Created the tree successfully using CertBot_TestPlan.jmx
+Starting standalone test @ 2023 Feb 17 14:57:07 EET (1676638627891)
+Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445
+Warning: Nashorn engine is planned to be removed from a future JDK release
+summary +    911 in 00:00:22 =   41.9/s Avg:  5446 Min:    58 Max: 21394 Err:     0 (0.00%) Active: 69 Started: 500 Finished: 431
+summary +     89 in 00:00:04 =   22.5/s Avg: 10332 Min:    59 Max: 22912 Err:     0 (0.00%) Active: 0 Started: 500 Finished: 500
+summary =   1000 in 00:00:26 =   38.9/s Avg:  5881 Min:    58 Max: 22912 Err:     0 (0.00%)
+Tidying up ...    @ 2023 Feb 17 14:57:34 EET (1676638654018)
+... end of run
+
+________________________________________________________
+Executed in   29,14 secs    fish           external
+   usr time   23,04 secs    1,43 millis   23,04 secs
+   sys time    1,28 secs    0,21 millis    1,28 secs
+
+

@@ -1,0 +1,28 @@
+<p>
+<code>Παράδειγμα αρχείου CSV:
+  <a href="https://server42.pdekritis.gr/static_content/samples/templates/sample.csv">
+    <span title="Σημείωση : Η τελευταία στήλη στο csv θα πρέπει να έχει τίτλο EMAIL και να είναι το email του παραλήπτη για το αντίστοιχο αρχείο.">
+      sample.csv</span></a>.
+  Περισσότερα παραδείγματα <a href="https://server42.pdekritis.gr/static_content/samples/templates">εδώ</a>
+</code>
+</p>
+
+
+ <h1> Διαθέσιμα αρχεία CSV </h1>
+<table>
+  <% @csv_files.each do |csv_file| %>
+    <%= render csv_file %>
+  <% end %>
+</table>
+
+<p/>
+
+<% if @csv_files.count == 0 %>
+  <p>Δεν υπάρχουν csv αρχεία.</p>
+<% end %>
+
+<div>
+  <%= turbo_frame_tag "new_csv_file", target: "_top" do %>
+    <%= link_to "Ανέβασμα νέου csv", new_csv_file_path, data: { turbo_frame: "new_csv_file" } %>
+  <% end %>
+</div>

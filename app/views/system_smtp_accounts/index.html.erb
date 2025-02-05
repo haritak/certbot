@@ -1,0 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>System smtp accounts</h1>
+
+
+<div id="system_smtp_accounts">
+  <% @system_smtp_accounts.each do |system_smtp_account| %>
+    <%= render system_smtp_account %>
+    <p>
+      <%= link_to "Show this system smtp account", system_smtp_account %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New system smtp account", new_system_smtp_account_path %>

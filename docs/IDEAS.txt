@@ -1,0 +1,5 @@
+1. Optionaly digitally sign the outgoing certificates
+2. Create tickets.
+  - Extend self_genererated_certificates to include optionaly a unique barcode or qrcode as an image which will be placed inside the certificate.
+  - Create subsystem to validate a certificate and possibly invalidate it (eg stamp it with : "TICKET INVALIDATED ON ..... AT ..:.. O'CLOCK"
+

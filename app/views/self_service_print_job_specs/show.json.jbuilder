@@ -1,0 +1,1 @@
+json.partial! "self_service_print_job_specs/self_service_print_job_spec", self_service_print_job_spec: @self_service_print_job_spec

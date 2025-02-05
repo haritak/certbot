@@ -1,0 +1,64 @@
+<h1>Νέος SMTP λογαριασμός</h1>
+
+<%= render "form", smtp_account: @smtp_account %>
+
+<br>
+<div>
+  <%= link_to "Back", smtp_accounts_path %>
+</div>
+<br>
+
+<h1> Οδηγίες </h1>
+
+<h2> Λογαριασμός ΠΣΔ </h2>
+
+<ul>
+  <li>Αποστολέας     : Το email του αποστολέα. (πχ haritak@sch.gr)
+  <li>Εξυπηρετητής   : mail.sch.gr</li>
+  <li>Πόρτα          : 587</li>
+  <li>Όνομα χρήστη   : το όνομα χρήστη στο ΠΣΔ. (Συνήθως είναι ίδιο με το email χωρίς όμως το @sch.gr)</li>
+  <li>Κωδικός        : ο κωδικός για το ΠΣΔ</li>
+</ul>
+
+<h2> Λογαριασμός GMAIL </h2>
+
+Πρέπει να είναι <u>ενεργοποιημένο το 2FA</u> του λογαριασμού και να δημιουργηθεί  <u>application password</u>.
+
+
+<ul>
+  <li>Αποστολέας     : Το email του αποστολέα. (πχ admin@digifest.info)
+  <li>Εξυπηρετητής   : smtp.gmail.com</li>
+  <li>Πόρτα          : 587</li>
+  <li>Όνομα χρήστη   : Το ίδιο με το email αποστολέα.</li>
+  <li>Κωδικός        : Το application password που δημιουργήσαμε προηγουμένως.</li>
+</ul>
+
+<h3>Gmail : Ενεργοποίηση 2FA</h3>
+
+<ol>
+  <li>Είσοδος στον gmail</li>
+  <li>click πάνω δεξιά στο εικονίδιο του λογαριασμού</li>
+  <li>Manage Your Google Account</li>
+  <li>Security</li>
+  <li>Signing in to Google</li>
+  <li>2 Step Verification</li>
+</ol>
+
+( αν πρόκειται για domain που το διαχειρίζεται 
+η google θα πρέπει πρώτα να δωθεί η δυνατότητα 2FA στους χρήστες 
+του domain από το διαχειριστικό της google (admin.google.com).
+Αλλιώς δεν εμφανίζεται η δυνατότητα να ενεργοποιηθεί το 2FA.
+)
+
+
+<h3>Gmail : Δημιουργία application password</h3>
+
+<ol>
+  <li>Είσοδος στον gmail</li>
+  <li>click πάνω δεξιά στο εικονίδιο του λογαριασμού</li>
+  <li>Manage Your Google Account</li>
+  <li>Security</li>
+  <li>Signing in to Google</li>
+  <li>Application Passwords</li>
+</ol>
+

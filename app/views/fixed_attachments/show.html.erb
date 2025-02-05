@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @fixed_attachment %>
+
+<div>
+  <%= link_to "Edit this", edit_fixed_attachment_path(@fixed_attachment) %> |
+  <%= link_to "Back", fixed_attachment_path %>
+
+  <%= button_to "Destroy this", @fixed_attachment, method: :delete %>
+</div>

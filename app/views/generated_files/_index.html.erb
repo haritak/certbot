@@ -1,0 +1,31 @@
+<%= stylesheet_link_tag "self_generated_files.css" %>
+
+<h2><%= @print_job_spec ? @print_job_spec.to_s : "" %> Αρχεία που έχουν δημιουργηθεί </h2>
+
+<% if @generated_files.count == 0 %>
+  <p>Δεν έχουν δημιουργηθεί αρχεία ακόμα.</p> 
+  <p>
+  <i>Ξεκινήστε την</i> την εργασία δημιουργίας αρχείων ώστε να δημιουργηθούν τα αντίστοιχα αρχεία.
+  </p>
+<% else %>
+  <%== pagy_nav( @pagynated_gfiles ) %>
+  <div id="generated_files">
+    <table>
+      <% @generated_files.each do |generated_file| %>
+        <%= render generated_file  %>
+      <% end %>
+    </table>
+  </div>
+  <%== pagy_nav( @pagynated_gfiles ) %>
+
+  <div style="border: solid; border-color:red; display: flex; justify-content: space-between;">
+
+    <p>
+    <%= link_to 'άμεση διαγραφή όλων των odts', remove_odts_print_job_spec_path %>
+    </p>
+
+    <p>
+    <%= link_to 'άμεση διαγραφή όλων των pdfs', remove_pdfs_print_job_spec_path %>
+    </p>
+  </div>
+<% end %>

@@ -1,0 +1,36 @@
+<div id="<%= dom_id generated_file %>">
+  <tr class="self_generated_file_row">
+    <td>
+      <%= generated_file.id %>
+    </td>
+    <td>
+      <%= File.basename generated_file.path %>
+    </td>
+    <td>
+      <%= File.extname( generated_file.path ).upcase %>
+    </td>
+    <td>
+      <%= 
+        link_to "download", download_generated_file_path( generated_file )
+      %>
+    </td>
+    <td>
+      <% if current_user.custom_smtp_account? %>
+        <% if session[ :smtp_password_pin ] && session[ :smtp_password_pin ] != "" %> 
+          <span title="Using <%= current_user.smtp_account.to_s %>">
+            <%= link_to "send", send_generated_file_path( generated_file ) %>
+          </span>
+        <% elsif current_user.no_smtp_account? %>
+          [ δεν έχει επιλεχθεί SMTP Server από τις ρυθμίσεις ]
+        <% else %>
+          [ λείπει το pin για την αποκρυπτογράφηση των στοιχείων λογαριασμού ]
+        <% end %>
+      <% else %>
+        <span title="Using <%= current_user.smtp_account.to_s %>">
+          [<%= link_to "send", send_generated_file_path( generated_file ) %>]
+        </span>
+      <% end %>
+    </td>
+  </tr>
+
+</div>

@@ -1,0 +1,54 @@
+<%= form_with(model: system_smtp_account) do |form| %>
+  <% if system_smtp_account.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(system_smtp_account.errors.count, "error") %> prohibited this system_smtp_account from being saved:</h2>
+
+      <ul>
+        <% system_smtp_account.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p><small>
+    Notes:
+    <ul>
+      <li>all settings apart from the description are stored encrypted.</li>
+    </ul>
+  </small></p>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_field :description %> ( a descriptive name shown in drop down lists)
+  </div>
+
+  <div>
+    <%= form.label :from, style: "display: block" %>
+    <%= form.text_field :from %> ( email address show as the sender. Ex: haritak@sch.gr )
+  </div>
+
+  <div>
+    <%= form.label :server, style: "display: block" %>
+    <%= form.text_field :server %> ( The email server. Must support starttls. Ex: mail.sch.gr )
+  </div>
+
+  <div>
+    <%= form.label :port, style: "display: block" %>
+    <%= form.number_field :port %> ( Email server port number. Ex: 587 )
+  </div>
+
+  <div>
+    <%= form.label :username, style: "display: block" %>
+    <%= form.text_field :username %> ( Username used to connect to the email server. Ex: haritak )
+  </div>
+
+  <div>
+    <%= form.label :password, style: "display: block" %>
+    <%= form.password_field :password %> ( Password used to connect to the email server. )
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

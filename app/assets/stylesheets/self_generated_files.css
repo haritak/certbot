@@ -1,0 +1,9 @@
+
+#generated_files {
+  display: flex;
+  margin: 1rem 1rem auto 1rem;
+}
+
+tr.self_generated_file_row:hover {
+  background-color: darkgray;
+}

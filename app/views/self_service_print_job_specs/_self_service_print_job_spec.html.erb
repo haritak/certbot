@@ -1,0 +1,88 @@
+<div id="<%= dom_id self_service_print_job_spec %>">
+  <p>
+  <strong> Σχετική εργασία εκτύπωσης : <%= self_service_print_job_spec.print_job_spec_id %> </strong>
+  <%= link_to self_service_print_job_spec.print_job_spec.description,  
+  print_job_spec_path( self_service_print_job_spec.print_job_spec ), 
+  { target: "_blank" } %>
+  </p>
+
+  <p>
+    <strong>Σύνδεσμος για αυτόνομο κατέβασμα: </strong>
+    <%= link_to 'Σελίδα κατεβάσματος', 
+      self_service_prepare_url( secret_url_part: self_service_print_job_spec.secret_url_part ),
+      { target: :_blank }
+    %>
+  </p>
+
+  <p>
+    <strong>Τίτλος φόρμας:</strong>
+    <%= self_service_print_job_spec.title %>
+  </p>
+
+  <h2>
+    <% if not self_service_print_job_spec.active %>
+      <div style="color: red">
+        Η φόρμα είναι ανενεργή
+      </div>
+    <% else %>
+      <div style="color: green">
+        Η φόρμα είναι ΕΝΕΡΓΗ.
+      </div>
+    <% end %>
+  </h2>
+
+  <h3>Περιγραφή πεδίων φόρμας</h3>
+  <code>
+    <%= self_service_print_job_spec.field_names %>
+  </code>
+
+  <% if self_service_print_job_spec.validate_client_email %>
+    <p>
+    <strong>Να γίνει διασταύρωση email με την λίστα CSV της εργασίας</strong>
+    </p>
+  <% end %>
+
+  <h3>Ρυθμίσεις παραλαβής δημιουργούμενου αρχείου</h3>
+
+  <ul>
+    <% if self_service_print_job_spec.direct_download %>
+      <li> Άμεσο κατέβασμα</li>
+    <% end %>
+    <% if self_service_print_job_spec.send_email %>
+      <li> 
+        Αποστολή μέσω email από τον λογαριασμό :
+        <ul>
+        <li><%= self_service_print_job_spec.smtp_account&.long_description %></li>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+
+  <h2>Παρουσίαση</h2>
+
+  <h3>css αρχείο</h3>
+  <%= self_service_print_job_spec.css %>
+  <% if not File.exist? Rails.root.join("app/assets/stylesheets", self_service_print_job_spec.css) %>
+    <b>Δεν βρίσκω το αρχείο, παρακαλώ ενημερώστε τον διαχειριστή για να το προσθέσει.</b>
+  <% else %>
+      Το αρχείο βρέθηκε.
+  <% end %>
+
+  <h3>banner αρχείο</h3>
+  <%= self_service_print_job_spec.banner %>
+  <% if not File.exist? Rails.root.join("public", self_service_print_job_spec.banner) %>
+    <b>Δεν βρίσκω το αρχείο, παρακαλώ ενημερώστε τον διαχειριστή για να το προσθέσει.</b>
+  <% else %>
+      Το αρχείο βρέθηκε.
+  <% end %>
+
+  <h3>gdpr αρχείο</h3>
+  <%= self_service_print_job_spec.gdpr %>
+  <% if not File.exist? Rails.root.join("public", self_service_print_job_spec.gdpr) %>
+    <b>Δεν βρίσκω το αρχείο, παρακαλώ ενημερώστε τον διαχειριστή για να το προσθέσει.</b>
+  <% else %>
+      Το αρχείο βρέθηκε.
+  <% end %>
+
+
+</div>

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @generated_file %>
+
+<div>
+  <%= link_to "Edit this generated file", edit_generated_file_path(@generated_file) %> |
+  <%= link_to "Back to generated files", generated_files_path %>
+
+  <%= button_to "Destroy this generated file", @generated_file, method: :delete %>
+</div>

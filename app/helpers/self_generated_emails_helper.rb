@@ -1,0 +1,2 @@
+module SelfGeneratedEmailsHelper
+end

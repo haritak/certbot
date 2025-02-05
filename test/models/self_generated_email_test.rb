@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: self_generated_emails
+#
+#  id                             :bigint           not null, primary key
+#  attachment_path                :string(500)
+#  recipient                      :string(255)
+#  status                         :string(255)
+#  values                         :text(65535)
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  self_service_print_job_spec_id :bigint           not null
+#
+# Indexes
+#
+#  index_self_generated_emails_on_self_service_print_job_spec_id  (self_service_print_job_spec_id)
+#  index_self_generated_emails_on_status                          (status)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (self_service_print_job_spec_id => self_service_print_job_specs.id)
+#
+require "test_helper"
+
+class SelfGeneratedEmailTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end

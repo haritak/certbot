@@ -1,0 +1,25 @@
+# == Schema Information
+#
+# Table name: fixed_attachments
+#
+#  id             :bigint           not null, primary key
+#  email_filename :string(255)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  user_id        :bigint           not null
+#
+# Indexes
+#
+#  index_fixed_attachments_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
+require "test_helper"
+
+class FixedAttachmentTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end

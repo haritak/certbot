@@ -1,0 +1,17 @@
+<%= form_with( model: @csv_file, id: "csv_file_form" ) do |form| %>
+  <% if @csv_file.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@csv_file.errors.count, "error") %> prohibited the CSV file from being saved:</h2>
+      <ul>
+        <% @csv_file.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.file_field :csvfile, accept: "text/csv" %>
+
+  <%= form.submit 'ανέβασμα επιλεγμένου αρχείου'%>
+  <p/>
+<% end %>

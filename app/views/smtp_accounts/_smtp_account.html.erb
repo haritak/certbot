@@ -1,0 +1,32 @@
+<div id="<%= dom_id smtp_account %>">
+
+  <% if current_user.is_admin? %>
+    <td>
+      <strong>owner:</strong> <%= smtp_account.user.email %>
+    </td>
+  <% else %>
+    <td>
+    </td>
+  <% end %>
+
+  <td>
+    <%= smtp_account.description %>
+  </td>
+
+  <td>
+    <%= smtp_account.from %>
+  </td>
+
+  <td>
+    <%= smtp_account.server %>:<%= smtp_account.port %>
+  </td>
+
+  <td>
+    <span title="κρυπτογραφημένο">
+      <%= smtp_account.username[..10] %> ...
+    </span>
+  </td>
+
+  <% smtp_account.password %>
+
+</div>

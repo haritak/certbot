@@ -1,0 +1,6 @@
+<!-- Using turbo here :
+ Based on : https://bhserna.com/inline-crud-hotwire.html
+ Full tutorial (TODO) : https://turbo.hotwired.dev/handbook/introduction -->
+<%= turbo_frame_tag @csv_file do %>
+  <%= render "csv_files/form" %> <!-- called from within print_job_specs/new -->
+<% end %>

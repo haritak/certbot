@@ -1,0 +1,12 @@
+<h1>Self service print job specs</h1>
+
+<div id="self_service_print_job_specs">
+  <% @self_service_print_job_specs.each do |self_service_print_job_spec| %>
+    <%= render self_service_print_job_spec %>
+    <p>
+      <%= link_to "Show this self service print job spec", self_service_print_job_spec %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New self service print job spec", new_self_service_print_job_spec_path %>
